@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা Harassment Detection ডেমো</title>
+<h1 translate="no">বাংলা Harassment Detection ডেমো</h1>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Hind Siliguri', sans-serif;
+  background: radial-gradient(circle at top, #0a0a0a 0%, #000 100%);
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Glass card */
+.container {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 213, 0.2);
+  padding: 40px 30px;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  width: 90%;
+  max-width: 600px;
+  animation: fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+h1 {
+  font-size: 1.9em;
+  color: #00ffd5;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px rgba(0,255,213,0.6);
+}
+
+input {
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #00ffd5;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1.1em;
+  outline: none;
+}
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ffd5, #00b7ff);
+  color: #111;
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,213,0.6);
+}
+
+#result {
+  margin-top: 25px;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Confidence bar */
+#confidenceBar {
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 0;
+  transition: width 1s ease, background 1s ease;
+}
+footer {
+  position: absolute;
+  bottom: 20px;
+  font-size: 0.85em;
+  color: #999;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>বাংলা হ্যুরেসমেন্ট ডিটেকশন</h1>
+  <input type="text" id="sentence" placeholder="একটি বাক্য টাইপ করুন...">
+  <button onclick="predictBullying()">চেক করুন</button>
+  <div id="result">🔄 মডেল লোড হচ্ছে...</div>
+  <div id="confidenceBar"></div>
+</div>
+
+<footer>Powered by mBERT + CNN (Demo Simulation) | Explainable AI for Bengali NLP</footer>
+
+<script>
+// Labels (simulated from your models)
+const labels = ["নিরাপদ", "জেন্ডার-ভিত্তিক", "ধর্ম-ভিত্তিক", "বয়স-ভিত্তিক", "জাতিগত", "অন্যান্য"];
+const bullyingKeywords = {
+  "জেন্ডার-ভিত্তিক": ["মেয়ে","ছেলে","নারী","পুরুষ"],
+  "ধর্ম-ভিত্তিক": ["মুসলিম","হিন্দু","খ্রিস্টান","বৌদ্ধ"],
+  "বয়স-ভিত্তিক": ["ছোট","বুড়ো","শিশু","বয়স্ক"],
+  "জাতিগত": ["চট্টগ্রামি","সিলেটি","আদিবাসী"],
+  "অন্যান্য": ["গাধা","বোকা","কুৎসিত","অসভ্য"]
+};
+
+// Simulated loading delay
+setTimeout(() => {
+  document.getElementById("result").textContent = "✅ মডেল লোড হয়েছে। এখন বাক্য টাইপ করুন।";
+}, 1000);
+
+function predictBullying() {
+  const text = document.getElementById("sentence").value.trim();
+  const resultDiv = document.getElementById("result");
+  const bar = document.getElementById("confidenceBar");
+  
+  if (text === "") {
+    resultDiv.textContent = "⚠️ দয়া করে একটি বাক্য লিখুন।";
+    resultDiv.style.color = "#facc15";
+    bar.style.width = "0";
+    return;
+  }
+  
+  let detected = "নিরাপদ";
+  let confidence = Math.random() * 0.15 + 0.85; // simulate ~85–100%
+  
+  for (let type in bullyingKeywords) {
+    for (let word of bullyingKeywords[type]) {
+      if (text.includes(word)) {
+        detected = type;
+        confidence = Math.random() * 0.15 + 0.90;
+        break;
+      }
+    }
+  }
+
+  // Animate result
+  if (detected === "নিরাপদ") {
+    resultDiv.innerHTML = `✅ এই বাক্য নিরাপদ। <br>Confidence: ${(confidence*100).toFixed(1)}%`;
+    resultDiv.style.color = "#34d399";
+    bar.style.background = "#34d399";
+  } else {
+    resultDiv.innerHTML = `⚠️ হ্যুরেসমেন্ট ধরা পড়েছে (${detected}) <br>Confidence: ${(confidence*100).toFixed(1)}%`;
+    resultDiv.style.color = "#f87171";
+    bar.style.background = "#f87171";
+  }
+
+  // Confidence bar animation
+  bar.style.width = `${confidence*100}%`;
+}
+</script>
+</body>
+</html>
