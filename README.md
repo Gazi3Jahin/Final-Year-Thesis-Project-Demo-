@@ -9,6 +9,8 @@
 This project demonstrates a **simulation** of a Bengali cyberbullying and harassment detection model directly in the browser — no installation, no backend.  
 It mimics the decision behavior of transformer-based models such as **mBERT** and **BERT+CNN hybrid architectures**, allowing users to test and visualize results instantly.
 
+##Original Dataset Link: https://zenodo.org/records/15230540
+
 🔍 The tool is designed for research presentation, public awareness, and defense demonstration purposes.
 
 ---
@@ -37,7 +39,7 @@ The demo is inspired by the actual research architecture involving:
 | **Transformers** | mBERT, XLM-RoBERTa, etc. |
 | **Explainability** | LIME (Local Interpretable Model-agnostic Explanations) |
 
-🧾 **Dataset:** Over **55,000 Bengali social media texts**  
+🧾 **Dataset:** Over **75,000 Bengali social media texts**  
 📈 **Best accuracy:** Up to **93%** (BERT embeddings with CNN/ANN hybrid)
 
 ---
@@ -76,7 +78,7 @@ This demo is part of an academic research project on **Cyberbullying Detection i
 It aims to support research in **AI for social good**, **language inclusivity**, and **digital well-being**.
 
 ---
-**👩‍💻 Author:** Gazi Jahin  
+**👩‍💻 Author:** Gazi Tahsina Sharmin Jahin  
 **🏫 Institution:** International Islamic University Chittagong (IIUC)  
 **📅 Year:** 2024 
 
