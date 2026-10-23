@@ -9,7 +9,7 @@
 This project demonstrates a **simulation** of a Bengali cyberbullying and harassment detection model directly in the browser — no installation, no backend.  
 It mimics the decision behavior of transformer-based models such as **mBERT** and **BERT+CNN hybrid architectures**, allowing users to test and visualize results instantly.
 
-##Original Dataset Link: https://zenodo.org/records/15230540
+##Original Dataset Link: https://zenodo.org/records/15230540 DOI: https://doi.org/10.5281/zenodo.15230540
 
 🔍 The tool is designed for research presentation, public awareness, and defense demonstration purposes.
 
